@@ -3,8 +3,11 @@ const router = express()
 
 
 
-
+//user routes
 router.use('/api/user', require('./UserRoutes'))
+
+//photo routes
+router.use('/api/photos', require('./PhotoRoutes'))
 
 
 

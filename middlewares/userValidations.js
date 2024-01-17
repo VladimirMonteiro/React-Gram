@@ -23,9 +23,15 @@ body("password").isString().withMessage("A senha é obrigatória.")]
 }
 
 
+const userUpdateValidations = () => {
+    return [body("name").optional().isLength({min:3}).withMessage("O nome precisa no minímo 3 caracteres."), body("password").optional().isLength({min:5}).withMessage("Minímo 5 caracteres")]
+}
+
+
 
 
 module.exports = {
     userCreateValidations,
-    loginValidations
+    loginValidations,
+    userUpdateValidations
 }
