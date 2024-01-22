@@ -28,6 +28,9 @@ const insertPhoto = async (req, res) => {
         return
     }
 
+    console.log(newPhoto)
+    console.log("usuario: " + reqUser)
+
 
     res.status(201).json(newPhoto)
 }
@@ -46,7 +49,7 @@ const deletePhoto = async (req, res) => {
         const photo = await Photo.findById(new mongoose.Types.ObjectId(id))
 
         if (!photo) {
-            res.status(404).json({ errors: ["Foto não encontrada t."] })
+            res.status(404).json({ errors: ["Foto não encontrada."] })
             return
         }
 
@@ -141,38 +144,41 @@ const updatePhoto = async (req, res) => {
 
     await photo.save()
 
+    console.log(photo)
+
     res.status(200).json({ photo, message: "Foto atualizada com sucesso!" })
 }
 
 // like funtion
 
 const likePhoto = async (req, res) => {
-
     const { id } = req.params;
-
+  
     const reqUser = req.user;
-
+  
     const photo = await Photo.findById(id);
-
+  
     // Check if photo exists
     if (!photo) {
-        res.status(404).json({ errors: ["Foto não encontrada!"] });
-        return;
+      res.status(404).json({ errors: ["Foto não encontrada!"] });
+      return;
     }
-
+  
     // Check if user already liked the photo
-    if (photo.like.includes(reqUser._id)) {
-        res.status(422).json({ errors: ["Você já curtiu esta foto."] });
-        return;
+    if (photo.likes.includes(reqUser._id)) {
+      res.status(422).json({ errors: ["Você já curtiu esta foto."] });
+      return;
     }
-
+  
     // Put user id in array of likes
-    photo.like.push(reqUser._id);
-
+    photo.likes.push(reqUser._id);
+  
     await photo.save();
-
-    res.status(200).json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida!" });
-};
+  
+    res
+      .status(200)
+      .json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida!" });
+  };
 
 
 //comment function
@@ -194,6 +200,12 @@ const commentPhoto = async(req, res) => {
         return;
     }
 
+    if(comment.length === 0){
+         res.status(422).json({errors: ["O comentario é obrigatório."]})
+         return
+        
+    }
+
     const userComments = {
         comment,
         userName: user.name,
@@ -211,6 +223,7 @@ const commentPhoto = async(req, res) => {
 
 const searchPhotos = async (req, res) => {
     const { q } = req.query;
+    console.log(q)
   
     const photos = await Photo.find({ title: new RegExp(q, "i") }).exec();
   

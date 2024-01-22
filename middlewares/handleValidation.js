@@ -9,12 +9,12 @@ const validate = (req, res, next)=> {
         return next()
     }
 
-    const extradedErrors = []
+    const extractedErrors = []
 
-    errors.array().map((err)=> extradedErrors.push((err.msg)))
+    errors.array().map((err)=> extractedErrors.push((err.msg)))
 
     return res.status(422).json({
-        errors: extradedErrors
+        errors: extractedErrors
     })
 }
 

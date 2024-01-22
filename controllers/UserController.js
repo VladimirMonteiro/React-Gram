@@ -69,7 +69,7 @@ const login = async (req, res) => {
 
     //check password
     if(!(await bcrypt.compare(password, user.password))){
-        res.status(404).json({erros: ["Senha inválida, tente novamente."]})
+        res.status(404).json({errors: ["Senha inválida, tente novamente."]})
         return
     }
 
@@ -84,8 +84,9 @@ const login = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
     const user = req.user
+    
 
-    res.status(200).json({user})
+    res.status(200).json(user)
 }
 
 
@@ -120,14 +121,12 @@ const update = async(req, res) => {
         user.profileImage = profileImage
     }
 
-    if(bio){
-        user.bio = bio
-    }
+   user.bio = bio
 
     try {
 
         await user.save()
-
+        console.log(user)
         res.status(200).json(user)
         
     } catch (error) {

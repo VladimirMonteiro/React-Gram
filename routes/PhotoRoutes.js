@@ -6,7 +6,7 @@ const {insertPhoto, deletePhoto, getAllPhotos, userPhotos, getPhotoById, updateP
 
 
 //Middlewares
-const {photoInsertValidations, photoUpdateValidations, commentsValidations} = require("../middlewares/photoValidations")
+const {photoInsertValidations, photoUpdateValidations, } = require("../middlewares/photoValidations")
 const authGuard = require("../middlewares/authGuard")
 const validate = require('../middlewares/handleValidation')
 const imageUpload = require('../middlewares/imageUpload')
@@ -21,7 +21,7 @@ router.get('/search', authGuard, searchPhotos)
 router.get('/:id', authGuard, getPhotoById),
 router.put('/:id', authGuard, photoUpdateValidations(), validate, updatePhoto)
 router.put('/like/:id', authGuard, likePhoto)
-router.put('/comment/:id', authGuard,commentsValidations(), validate, commentPhoto)
+router.put('/comment/:id', authGuard, commentPhoto)
 
 
 

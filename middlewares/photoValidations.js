@@ -16,15 +16,12 @@ const photoUpdateValidations = ()=> {
     return[body("title").optional().isString().withMessage("O titulo é obrigatório.").isLength({min:3}).withMessage("O titulo deve conter pelo menos 3 caracteres.")]
 }
 
-const commentsValidations = ()=> {
-    return [body("comments").isLength().withMessage("O comentário é obrigatório. ")]
-}
 
 
 module.exports = {
     photoInsertValidations,
     photoUpdateValidations,
-    commentsValidations
+  
 }
 
 
