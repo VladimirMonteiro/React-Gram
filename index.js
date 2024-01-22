@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, 'public')))
 
 //cors
-app.use(cors({credentials: true, origin: "react-gram-mauve.vercel.app"}))
+app.use(cors({credentials: true, origin: "*"}))
 
 //DB
 require('./db/conn')
